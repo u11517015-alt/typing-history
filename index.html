@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲開發歷程</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+            background-color: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+        }
+
+        .subtitle {
+            color: #666;
+        }
+
+        .cards {
+            width: 90%;
+            max-width: 1100px;
+            margin: 20px auto 50px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #666;
+            min-height: 45px;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .card a:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 700px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>英打遊戲開發歷程</h1>
+        <p class="subtitle">數位科技概論｜第三週</p>
+    </header>
+
+    <main class="cards">
+
+        <section class="card">
+            <h2>版本一</h2>
+            <p>標題與開始按鈕</p>
+            <a href="https://u11517015-alt.github.io/typing-v1/" target="_blank">
+                開啟版本一
+            </a>
+        </section>
+
+        <section class="card">
+            <h2>版本二</h2>
+            <p>加入鍵盤圖片與開始音效</p>
+            <a href="https://u11517015-alt.github.io/typing-v2/" target="_blank">
+                開啟版本二
+            </a>
+        </section>
+
+        <section class="card">
+            <h2>版本三</h2>
+            <p>即將推出</p>
+            <a href="coming-soon.html">
+                Coming Soon
+            </a>
+        </section>
+
+    </main>
+
+</body>
+</html>
