@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打遊戲版本 3</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f3eb;
+            color: #24433d;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px 0 40px;
+        }
+
+        .back {
+            color: #24433d;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .version {
+            margin-top: 25px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #6b807b;
+        }
+
+        h1 {
+            margin: 10px 0;
+            font-size: 38px;
+        }
+
+        .description {
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        button {
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #47776d;
+            background: white;
+            color: #24433d;
+        }
+
+        #startButton {
+            background: #47776d;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .game-box {
+            background: white;
+            border: 1px solid #d8ddd5;
+            border-radius: 18px;
+            padding: 25px 20px 30px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .stat {
+            background: #edf1e9;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 16px;
+        }
+
+        .stat span {
+            font-size: 28px;
+            margin-left: 5px;
+        }
+
+        .target {
+            text-align: center;
+            font-size: 55px;
+            font-weight: bold;
+            min-height: 70px;
+            margin-bottom: 25px;
+        }
+
+        .keyboard {
+            background: #dce3dc;
+            border-radius: 16px;
+            padding: 18px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .row:last-child {
+            margin-bottom: 0;
+        }
+
+        .key {
+            width: 48px;
+            height: 42px;
+            background: white;
+            border: 1px solid #9eaea4;
+            border-radius: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            position: relative;
+            transition: 0.12s;
+        }
+
+        .key.target-key {
+            background: #efb59e;
+        }
+
+        .key.active-key {
+            background: #d87961;
+            color: white;
+            transform: translateY(2px);
+        }
+
+        .dot {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #c85e49;
+            bottom: 4px;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 22px;
+            min-height: 24px;
+        }
+
+        .hint {
+            text-align: center;
+            margin-top: 20px;
+            color: #66736e;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .key {
+                width: 32px;
+                height: 36px;
+                font-size: 13px;
+            }
+
+            .keyboard {
+                padding: 10px 5px;
+            }
+
+            .controls {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a class="back" href="../index.html">← 回開發歷程</a>
+
+    <div class="version">VERSION 03 · LEFT HAND</div>
+
+    <h1>英打遊戲版本 3</h1>
+
+    <p class="description">
+        把左手放在 A、S、D、F，按下亮起的按鍵。
+    </p>
+
+    <div class="controls">
+        <button id="startButton">開始／重新開始</button>
+        <button id="stopButton">停止練習</button>
+    </div>
+
+    <div class="game-box">
+
+        <div class="stats">
+            <div class="stat">
+                得分<span id="score">0</span>
+            </div>
+
+            <div class="stat">
+                按錯<span id="presses">0</span>
+            </div>
+        </div>
+
+        <div id="target" class="target">—</div>
+
+        <div class="keyboard">
+
+            <!-- 第一排 -->
+            <div class="row">
+                <div class="key">Q</div>
+                <div class="key">W</div>
+                <div class="key">E</div>
+                <div class="key">R</div>
+                <div class="key">T</div>
+                <div class="key">Y</div>
+                <div class="key">U</div>
+                <div class="key">I</div>
+                <div class="key">O</div>
+                <div class="key">P</div>
+            </div>
+
+            <!-- 第二排 -->
+            <div class="row">
+                <div id="key-A" class="key target-key">
+                    A
+                    <span class="dot"></span>
+                </div>
+
+                <div id="key-S" class="key target-key">
+                    S
+                    <span class="dot"></span>
+                </div>
+
+                <div id="key-D" class="key target-key">
+                    D
+                    <span class="dot"></span>
+                </div>
+
+                <div id="key-F" class="key target-key">
+                    F
+                    <span class="dot"></span>
+                </div>
+
+                <div class="key">G</div>
+                <div class="key">H</div>
+                <div class="key">J</div>
+                <div class="key">K</div>
+                <div class="key">L</div>
+                <div class="key">;</div>
+            </div>
+
+            <!-- 第三排 -->
+            <div class="row">
+                <div class="key">Z</div>
+                <div class="key">X</div>
+                <div class="key">C</div>
+                <div class="key">V</div>
+                <div class="key">B</div>
+                <div class="key">N</div>
+                <div class="key">M</div>
+            </div>
+
+        </div>
+
+        <div id="message" class="message">
+            按開始，再使用實體鍵盤作答。
+        </div>
+
+    </div>
+
+    <div class="hint">
+        請切換英文輸入；大寫與小寫都接受。長按不連續計分。
+    </div>
+
+</div>
+
+
+<script>
+
+    const letters = ["A", "S", "D", "F"];
+
+    const target = document.getElementById("target");
+    const scoreText = document.getElementById("score");
+    const pressesText = document.getElementById("presses");
+    const message = document.getElementById("message");
+
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+
+    let currentLetter = "";
+    let score = 0;
+    let presses = 0;
+    let playing = false;
+
+
+    // 清除目前亮起的按鍵
+    function clearTarget() {
+
+        letters.forEach(letter => {
+
+            const key = document.getElementById("key-" + letter);
+
+            key.classList.remove("active-key");
+
+        });
+
+    }
+
+
+    // 隨機產生下一題
+    function showQuestion() {
+
+        clearTarget();
+
+        const randomIndex =
+            Math.floor(Math.random() * letters.length);
+
+        currentLetter = letters[randomIndex];
+
+        target.textContent = currentLetter;
+
+        const targetKey =
+            document.getElementById("key-" + currentLetter);
+
+        targetKey.classList.add("active-key");
+
+    }
+
+
+    // 開始／重新開始
+    function startGame() {
+
+        score = 0;
+        presses = 0;
+
+        playing = true;
+
+        scoreText.textContent = score;
+        pressesText.textContent = presses;
+
+        message.textContent = "請按亮起的按鍵。";
+
+        showQuestion();
+
+    }
+
+
+    // 停止練習
+    function stopGame() {
+
+        playing = false;
+
+        currentLetter = "";
+
+        target.textContent = "—";
+
+        clearTarget();
+
+        message.textContent = "練習已停止。";
+
+    }
+
+
+    // 偵測實體鍵盤
+    document.addEventListener("keydown", function(event) {
+
+        // 沒有開始遊戲就不處理
+        if (!playing) {
+            return;
+        }
+
+        // 長按不重複計算
+        if (event.repeat) {
+            return;
+        }
+
+        const pressedKey = event.key.toUpperCase();
+
+        // 只接受 A、S、D、F
+        if (!letters.includes(pressedKey)) {
+            return;
+        }
+
+
+        // 按對
+        if (pressedKey === currentLetter) {
+
+            score++;
+
+            scoreText.textContent = score;
+
+            message.textContent = "答對了！";
+
+            showQuestion();
+
+        }
+
+        // 按錯
+        else {
+
+            presses++;
+
+            pressesText.textContent = presses;
+
+            message.textContent = "答錯了，再試一次！";
+
+        }
+
+    });
+
+
+    // 按鈕功能
+    startButton.addEventListener("click", startGame);
+
+    stopButton.addEventListener("click", stopGame);
+
+</script>
+
+</body>
+</html>
